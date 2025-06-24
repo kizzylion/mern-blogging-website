@@ -29,6 +29,19 @@ const Navbar = () => {
         >
           <i className="fi fi-rr-search text-2xl text-dark-grey"></i>
         </button>
+
+        <Link to="/editor" className="hidden md:flex gap-2 link">
+          <i className="fi fi-rr-file-edit"></i>
+          <p>Write</p>
+        </Link>
+
+        <Link to="/signin" className="btn-dark py-2">
+          <p>Login</p>
+        </Link>
+
+        <Link to="/signup" className="btn-light py-2 hidden md:block">
+          <p>Signup</p>
+        </Link>
       </div>
     </nav>
   );
