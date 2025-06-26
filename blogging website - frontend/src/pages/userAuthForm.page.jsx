@@ -7,8 +7,6 @@ import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 
 const UserAuthForm = ({ type }) => {
-  const authForm = useRef();
-
   const userAuthThroughServer = (serverRoute, formData) => {
     axios
       .post(import.meta.env.VITE_SERVER_DOMAIN + serverRoute, formData)
@@ -28,11 +26,6 @@ const UserAuthForm = ({ type }) => {
 
     let serverRoute = type == "sign-in" ? "/signin" : "/signup";
 
-    if (!authForm.current) {
-      console.error("Form ref is not available.");
-      return;
-    }
-
     setErrors({});
     setIsLoading(true);
 
@@ -40,7 +33,7 @@ const UserAuthForm = ({ type }) => {
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
 
     // Extract form data
-    const form = new FormData(authForm.current);
+    const form = new FormData(formElement); //the formElement is the value of the form id attribute
     let formData = {};
     for (let [key, value] of form.entries()) {
       formData[key] = value.trim(); // Trim whitespace
@@ -104,7 +97,7 @@ const UserAuthForm = ({ type }) => {
       <section className="h-cover flex items-center justify-center">
         <Toaster />
         <form
-          ref={authForm}
+          id="formElement"
           onSubmit={handleSubmit}
           className="w-[80%] max-w-[400px]"
           noValidate
