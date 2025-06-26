@@ -4,11 +4,21 @@ import googleIcon from "../imgs/google.png";
 import AnimationWrapper from "../common/page-animation";
 import { useRef, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
+import axios from "axios";
 
 const UserAuthForm = ({ type }) => {
   const authForm = useRef();
 
-  const userAuthThroughServer = (serverRoute, FormData) => {};
+  const userAuthThroughServer = (serverRoute, formData) => {
+    axios
+      .post(import.meta.env.VITE_SERVER_DOMAIN + serverRoute, formData)
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch(({ response }) => {
+        toast.error(response.data.error);
+      });
+  };
 
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +75,7 @@ const UserAuthForm = ({ type }) => {
       );
     }
 
-    // userAuthThroughServer(serverRoute, formData);
+    userAuthThroughServer(serverRoute, formData);
     try {
       // Here you would typically make an API call
       console.log("Form submitted:", formData);

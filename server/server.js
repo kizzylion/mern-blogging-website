@@ -4,11 +4,13 @@ import "dotenv/config";
 import bcrypt from "bcrypt";
 import { nanoid } from "nanoid";
 import jwt from "jsonwebtoken";
+import cors from "cors";
 
 // schema below
 import User from "./Schema/User.js";
 
 const server = express();
+
 let PORT = process.env.PORT || 3000;
 
 let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
@@ -16,6 +18,7 @@ let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for pass
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
+server.use(cors());
 
 // Database connection
 const connectDB = async () => {
@@ -83,11 +86,11 @@ const generateUsername = async (email) => {
 };
 
 server.post("/signup", async (req, res) => {
-  let { fullname, email, password } = req.body;
+  let { fullName, email, password } = req.body;
 
   // validating the data from frontend
 
-  if (fullname.length < 3) {
+  if (fullName.length < 3) {
     return res
       .status(403)
       .json({ error: "Fullname must be at least 3 letters long" });
@@ -124,7 +127,7 @@ server.post("/signup", async (req, res) => {
     // Create new user
     const newUser = new User({
       personal_info: {
-        fullname,
+        fullname: fullName,
         email,
         password: hashedPassword,
         username,
