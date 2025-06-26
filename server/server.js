@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import "dotenv/config";
 import bcrypt from "bcrypt";
+import { nanoid } from "nanoid";
 
 // schema below
 import User from "./Schema/User.js";
@@ -54,6 +55,14 @@ connectDB()
     process.exit(1);
   });
 
+const formatDataToSend = (user) => {
+  return {
+    profile_img: user.personal_info.profile_img,
+    username: user.personal_info.username,
+    fullname: user.personal_info.fullname,
+  };
+};
+
 // Helper function to generate username
 const generateUsername = async (email) => {
   let username = email.split("@")[0];
@@ -62,7 +71,7 @@ const generateUsername = async (email) => {
     "personal_info.username": username,
   }).then((result) => result);
 
-  isUsernameNotUnique ? (username += Math.floor(Math.random() * 1000)) : "";
+  isUsernameNotUnique ? (username += nanoid().substring(0, 5)) : "";
 
   return username;
 };
@@ -121,14 +130,7 @@ server.post("/signup", async (req, res) => {
 
     return res.status(200).json({
       message: "User created successfully",
-      user: {
-        id: savedUser.id,
-        fullname: savedUser.personal_info.fullname,
-        email: savedUser.personal_info.email,
-        username: savedUser.personal_info.username,
-        profile_img: savedUser.personal_info.profile_img,
-        joinedAt: savedUser.joinedAt,
-      },
+      user: formatDataToSend(savedUser),
     });
   } catch (error) {
     console.error("Error creating user:", error);
