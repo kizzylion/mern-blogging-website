@@ -145,3 +145,29 @@ server.post("/signup", async (req, res) => {
     });
   }
 });
+
+server.post("/signin", async (req, res) => {
+  let { email, password } = req.body;
+
+  try {
+    let user = await User.findOne({ "personal_info.email": email });
+
+    if (!user) {
+      return res.status(403).json({ error: "Email not found" });
+    }
+
+    const isCorrectPassword = await bcrypt.compare(
+      password,
+      user.personal_info.password
+    );
+
+    if (!isCorrectPassword) {
+      return res.status(403).json({ error: "Incorrect password" });
+    }
+
+    return res.status(200).json(formatDataToSend(user));
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: err.message });
+  }
+});
