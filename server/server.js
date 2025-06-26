@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import "dotenv/config";
 import bcrypt from "bcrypt";
 import { nanoid } from "nanoid";
+import jwt from "jsonwebtoken";
 
 // schema below
 import User from "./Schema/User.js";
@@ -56,10 +57,15 @@ connectDB()
   });
 
 const formatDataToSend = (user) => {
+  const access_token = jwt.sign(
+    { id: user._id },
+    process.env.SECRET_ACCESS_KEY
+  );
   return {
     profile_img: user.personal_info.profile_img,
     username: user.personal_info.username,
     fullname: user.personal_info.fullname,
+    access_token,
   };
 };
 
