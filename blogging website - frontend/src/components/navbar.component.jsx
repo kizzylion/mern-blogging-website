@@ -6,11 +6,22 @@ import UserNavigationPanel from "./user-navigation.component";
 
 const Navbar = () => {
   const [searchBoxVisibility, setSearchBoxVisibility] = useState(false);
+  const [userNavPanel, setUserNavPanel] = useState(false);
 
   const {
     userAuth,
     userAuth: { access_token, profile_img },
   } = useContext(UserContext);
+
+  const handleUserNavPanel = () => {
+    setUserNavPanel((currentVal) => !currentVal);
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setUserNavPanel(false);
+    }, 200);
+  };
 
   return (
     <>
@@ -51,7 +62,12 @@ const Navbar = () => {
                 </button>
               </Link>
 
-              <div className="relative">
+              <div
+                className="relative"
+                onClick={handleUserNavPanel}
+                onBlur={handleBlur}
+                tabIndex={0}
+              >
                 <button className="w-12 h-12 mt-1 ">
                   <img
                     src={profile_img}
@@ -59,8 +75,7 @@ const Navbar = () => {
                     alt=""
                   />
                 </button>
-
-                <UserNavigationPanel />
+                {userNavPanel && <UserNavigationPanel />}
               </div>
             </>
           ) : (
