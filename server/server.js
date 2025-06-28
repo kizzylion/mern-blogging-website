@@ -8,6 +8,7 @@ import cors from "cors";
 import admin from "firebase-admin";
 import serviceAccountKey from "./serviceAccountKey.json" with { type: "json" };
 import { getAuth } from "firebase-admin/auth";
+import aws from "aws-sdk"
 
 // schema below
 import User from "./Schema/User.js";
@@ -91,6 +92,13 @@ connectDB()
     console.error("Failed to connect to database:", error);
     process.exit(1);
   });
+
+  // setting up s3 bucket
+  const s3 = new aws.s33({
+    region: 'us-east-2',
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  })
 
 const formatDataToSend = (user) => {
   const access_token = jwt.sign(
