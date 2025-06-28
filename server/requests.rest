@@ -1,8 +1,3 @@
-POST http://localhost:3000/signup 
-Content-Type: application/json
 
-{
-    "fullname":"Kizito",
-    "email": "chmkzt.ck@gmail.com",
-    "password": "Bookset7"
-}
+
+GET http://localhost:3000/get-upload-url
