@@ -6,11 +6,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njg0OTdiM
 
 
 {
-    "title": "test title",
+    "title": "test title @ $ ^ $ !237 73",
     "banner" : "https//example.com/image-url",
     "des": "this is ashort des",
     "content": {
         "blocks":[1,2]
     },
-    "tags": ["a","b"]
+    "tags": ["1","2"]
 }
