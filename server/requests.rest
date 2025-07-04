@@ -1,3 +1,16 @@
+# "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njg0OTdiMDAzYWJlNTczNDE0MDAyNSIsImlhdCI6MTc1MTY2NTAxOX0.4xyIZzVi1NuniZqGHQvvoeUEw5k32rd-NOz4aMjVI5M"
+
+POST  http://localhost:3000/create-blog
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njg0OTdiMDAzYWJlNTczNDE0MDAyNSIsImlhdCI6MTc1MTY2NTAxOX0.4xyIZzVi1NuniZqGHQvvoeUEw5k32rd-NOz4aMjVI5M
 
 
-GET http://localhost:3000/get-upload-url
+{
+    "title": "test title",
+    "banner" : "https//example.com/image-url",
+    "des": "this is ashort des",
+    "content": {
+        "blocks":[1,2]
+    },
+    "tags": ["a","b"]
+}

@@ -39,7 +39,7 @@ const PublishForm = () => {
 
       let tag = e.target.value;
       if (tags.length < tagLimit) {
-        if (!tags.includes(tag) && tag.length) {
+        if (!tags.includes(tag.toLowerCase()) && tag.length) {
           setBlog({ ...blog, tags: [...tags, tag] });
         }
       } else {
