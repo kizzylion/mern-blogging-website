@@ -306,7 +306,7 @@ server.post("/create-blog", verifyJWT,(req, res)=>{
 
   
   if(!title.length) return res.status(403).json({error: "You must provide a title"});
-  
+
   if(!draft){
     if(!des.length || des.length > 200) return res.status(403).json({error: "You must provide blog description under 200 characters"});
 
@@ -330,7 +330,7 @@ server.post("/create-blog", verifyJWT,(req, res)=>{
   blog.save().then(blog =>{
     let incrementVal = draft ? 0 : 1;
 
-    User.findOneAndUpdate({_id: authorId}, {$inc : {"account_info.total_post" : incrementVal}, $push:{"blogs": blog._id}}).then(user=>{
+    User.findOneAndUpdate({_id: authorId}, {$inc : {"account_info.total_posts" : incrementVal}, $push:{"blogs": blog._id}}).then(user=>{
       return res.status(200).json({id: blog.blog_id})
     }).catch(err => {
       return res.status(500).json({error:"Failed to update total posts number"})
