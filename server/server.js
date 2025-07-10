@@ -304,9 +304,9 @@ server.get("/latest-blogs", (req, res)=>{
   let maxLimit = 5;
 
   Blog.find({draft:false})
-  .populate("author", "personal_info.profile_img personal_info.username, personal_info.fullname -_id ")
+  .populate("author", "personal_info.profile_img personal_info.username personal_info.fullname -_id ")
   .sort({"publishedAt": -1})
-  .select("blog_id title des activity tags publishedAt -_id ")
+  .select("blog_id banner title des activity tags publishedAt -_id ")
   .limit(maxLimit)
   .then(blogs =>{
     return res.status(200).json({blogs})
@@ -320,6 +320,7 @@ server.post("/create-blog", verifyJWT,(req, res)=>{
   let authorId = req.user
 
   let { title, banner, content, tags, des, draft} = req.body;
+  
 
   
   if(!title.length) return res.status(403).json({error: "You must provide a title"});
@@ -341,7 +342,7 @@ server.post("/create-blog", verifyJWT,(req, res)=>{
   let blog_id = title.replace(/[^a-zA-Z0-9]/g, " ").replace(/\s+/g, "-").trim() + nanoid()
 
   let blog = new Blog({
-    title, banner,des, content,author: authorId, blog_id, draft: Boolean(draft)
+    title, banner,des, tags, content,author: authorId, blog_id, draft: Boolean(draft)
   })
 
   blog.save().then(blog =>{
