@@ -4,6 +4,7 @@ const InPageNavigation = ({
   routes,
   defaultHidden = [],
   defaultActiveIndex = 0,
+  children,
 }) => {
   let activeTabLineRef = useRef();
   let activeTabRef = useRef();
@@ -49,6 +50,8 @@ const InPageNavigation = ({
           className="absolute bottom-0 duration-300 "
         />
       </div>
+
+      {Array.isArray(children) ? children[inPageNavIndex] : children}
     </>
   );
 };
