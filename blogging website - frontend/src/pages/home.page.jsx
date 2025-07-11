@@ -13,19 +13,36 @@ const Homepage = () => {
   let [pageState, setPageState] = useState("home");
 
   let categories = [
-    "programming",
+    "career",
+    "tip",
     "travel",
-    "cooking",
     "technology",
-    "finances",
-    "fitness",
-    "social media",
-    "business",
+    "ai",
+    "writing",
+    "betting",
+    "finance",
+    "cooking",
+    "music",
+    "movie",
+    "blogging",
   ];
 
   const fetchLatestBlogs = () => {
     axios
       .get(import.meta.env.VITE_SERVER_DOMAIN + "/latest-blogs")
+      .then(({ data }) => {
+        setBlogs(data.blogs);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const fetchBlogByCategory = () => {
+    axios
+      .post(import.meta.env.VITE_SERVER_DOMAIN + "/search-blogs", {
+        tag: pageState,
+      })
       .then(({ data }) => {
         setBlogs(data.blogs);
       })
@@ -62,6 +79,8 @@ const Homepage = () => {
 
     if (pageState == "home") {
       fetchLatestBlogs();
+    } else {
+      fetchBlogByCategory();
     }
 
     if (!trendingBlog) {

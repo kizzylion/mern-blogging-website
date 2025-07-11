@@ -1,3 +1,8 @@
 # "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njg0OTdiMDAzYWJlNTczNDE0MDAyNSIsImlhdCI6MTc1MTY2NTAxOX0.4xyIZzVi1NuniZqGHQvvoeUEw5k32rd-NOz4aMjVI5M"
 
-GET   http://localhost:3000/trending-blogs
+POST http://localhost:3000/search-blogs
+Content-Type: application/json
+
+{
+    "tag": "blog"
+}
