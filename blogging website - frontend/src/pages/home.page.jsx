@@ -6,6 +6,7 @@ import Loader from "../components/loader.component";
 import BlogPostCard from "../components/blog-post.component";
 import MinimalBlogPost from "../components/nobanner-blog-post.component";
 import { activeTabRef } from "../components/inpage-navigation.component";
+import NoDataMessage from "../components/nodata.component";
 
 const Homepage = () => {
   let [blogs, setBlogs] = useState(null);
@@ -99,7 +100,7 @@ const Homepage = () => {
             <>
               {blogs == null ? (
                 <Loader />
-              ) : (
+              ) : blogs.length ? (
                 blogs.map((blog, i) => {
                   return (
                     <AnimationWrapper
@@ -113,6 +114,8 @@ const Homepage = () => {
                     </AnimationWrapper>
                   );
                 })
+              ) : (
+                <NoDataMessage message={"No blogs published"} />
               )}
             </>
 
@@ -120,7 +123,7 @@ const Homepage = () => {
 
             {trendingBlog == null ? (
               <Loader />
-            ) : (
+            ) : trendingBlog.length ? (
               trendingBlog.map((blog, i) => {
                 return (
                   <AnimationWrapper
@@ -131,6 +134,8 @@ const Homepage = () => {
                   </AnimationWrapper>
                 );
               })
+            ) : (
+              <NoDataMessage message={"No trending blog"} />
             )}
           </InPageNavigation>
         </div>
@@ -166,7 +171,7 @@ const Homepage = () => {
 
               {trendingBlog == null ? (
                 <Loader />
-              ) : (
+              ) : trendingBlog.length ? (
                 trendingBlog.map((blog, i) => {
                   return (
                     <AnimationWrapper
@@ -177,6 +182,8 @@ const Homepage = () => {
                     </AnimationWrapper>
                   );
                 })
+              ) : (
+                <NoDataMessage message={"No trending blog"} />
               )}
             </div>
           </div>
